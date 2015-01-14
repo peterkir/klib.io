@@ -1,0 +1,18 @@
+-include: ${workspace}/cnf/global-jdt-sync.properties
+
+-sub: *.bnd
+
+-buildpath:  \
+	ee.j2se;version=1.7,\
+	osgi.core;version=4.2,\
+	biz.aQute.bnd.annotation,\
+	com.google.guava,\
+	biz.aQute.bndlib,\
+	org.apache.commons.io,\
+	org.apache.felix.gogo.runtime,\
+	slf4j.api
+
+Bundle-Version: 0.1.0.${tstamp;yyyyMMdd-HHmmss}
+
+Export-Package:  \
+    io.klib.search.filesystem

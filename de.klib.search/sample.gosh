@@ -1,8 +1,0 @@
-echo \# searching with the following command
-echo searchDir ../de.klib.search.test/resources ".*file3.txt" ".*new\\Rline.*" true true
-
-searchDir ../de.klib.search.test/resources ".*file3.txt" ".*new\\Rline.*" true true
-
-
-echo \# searchDir ../de.klib.search.test/resources  ".*MANIFEST\\.MF" ".*o\\s*r\\s*g\\s*\\.\\s*o\\s*s\\s*g\\s*i\\s*\\.\\s*s\\s*e\\s*r\\s*v\\s*i\\s*c\\s*e\\s*\\.\\s*s\\s*t\\s*a\\s*r\\s*t\\s*l\\s*e\\s*v\\s*e\\s*l.*" true true
-searchDir ../de.klib.search.test/resources  ".*MANIFEST\\.MF" ".*o\\s*r\\s*g\\s*\\.\\s*o\\s*s\\s*g\\s*i\\s*\\.\\s*s\\s*e\\s*r\\s*v\\s*i\\s*c\\s*e\\s*\\.\\s*s\\s*t\\s*a\\s*r\\s*t\\s*l\\s*e\\s*v\\s*e\\s*l.*" true true
