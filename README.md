@@ -1,2 +1,2 @@
 # klib.io
-OSGi bundle libraries
+OSGi bundle library projects

@@ -1,0 +1,23 @@
+-include: ${workspace}/cnf/global-jdt-sync.properties
+
+-buildpath:  \
+	ee.j2se;version=1.7,\
+	osgi.core;version='[4.2,5)',\
+	osgi.cmpn,\
+	biz.aQute.bnd.annotation,\
+	${junit},\
+	slf4j.api,\
+	\
+	de.klib.search.filesystem;version=latest
+
+
+Bundle-Version: 0.1.0.${tstamp}
+Bundle-Activator: de.klib.search.test.TestdataSetupBundle
+
+Private-Package:  \
+	de.klib.search.test
+
+-includeresource: testdata=resources
+
+Test-Cases:  \
+	${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
