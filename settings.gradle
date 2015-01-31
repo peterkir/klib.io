@@ -1,0 +1,1 @@
+include 'io.klib.search', 'io.klib.search.test'

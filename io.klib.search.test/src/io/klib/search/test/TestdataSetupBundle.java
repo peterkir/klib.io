@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 public class TestdataSetupBundle implements BundleActivator {
 
     public static final String TESTDATA = "testdata";
-    private final Logger       logger   = LoggerFactory.getLogger(getClass());
-    private BundleContext      ctx;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private BundleContext ctx;
 
     @Override
     public void start(BundleContext context) throws Exception {
@@ -28,8 +28,7 @@ public class TestdataSetupBundle implements BundleActivator {
         Enumeration<URL> entries = bundle.findEntries(TESTDATA, "*.*", true);
         if (entries == null) {
             logger.error("No testdata folder found inside bundle!");
-        }
-        else {
+        } else {
             while (entries.hasMoreElements()) {
                 URL entryURL = entries.nextElement();
                 File targetFile = context.getDataFile(entryURL.getPath());

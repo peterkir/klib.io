@@ -19,7 +19,7 @@
 	osgi.identity;filter:='(osgi.identity=io.klib.search.filesystem)',\
 	osgi.identity;filter:='(osgi.identity=io.klib.search.filesystem.impl)',\
 	osgi.identity;filter:='(osgi.identity=io.klib.search.test)',\
-	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)'
+	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
 
 -runbundles:  \
 	org.apache.felix.configadmin;version='[1.8.0,1.8.1)',\
@@ -42,6 +42,6 @@
     ch.qos.logback.core,\
     ch.qos.logback.classic,\
     \
-	io.klib.search.filesystem;version=latest,\
-	io.klib.search.filesystem.impl;version=latest,\
-	io.klib.search.test;version=latest
+	io.klib.search.filesystem;version=snapshot,\
+	io.klib.search.filesystem.impl;version=snapshot,\
+	io.klib.search.test;version=snapshot

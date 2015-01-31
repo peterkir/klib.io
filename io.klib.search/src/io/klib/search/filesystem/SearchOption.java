@@ -7,14 +7,14 @@ package io.klib.search.filesystem;
  */
 public enum SearchOption {
 
-	/**
-	 * recurse into child directories
-	 */
-	RECURSE,
+    /**
+     * recurse into child directories
+     */
+    RECURSE,
 
-	/**
-	 * look inside archive files
-	 */
-	ARCHIVE
+    /**
+     * look inside archive files
+     */
+    ARCHIVE
 
 }

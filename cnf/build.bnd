@@ -22,6 +22,7 @@
 #bin:                   bin
 #testsrc:               test
 #testbin:               bin_test
+#test-reports:          test-reports
 #target-dir:            generated
 #target:                ${project}/${target-dir}
 #build:                 ${workspace}/cnf
@@ -32,8 +33,8 @@
 ## Java Compiler Options
 #java:                  java
 #javac:                 javac
-#javac.source:          1.5
-#javac.target:          1.5
+javac.source:           1.8
+javac.target:           1.8
 #javac.debug:           on
 
 ## Bnd Options
@@ -47,11 +48,16 @@
 # -plugin: ${ext.repositories.-plugin}, org.example.MyPlugin
 
 
-## To enable baselining, uncomment the following lines:
-# -baseline: *
+# To enable baselining, uncomment the following lines:
+-baseline: *
 
 
 ## If you use git, you might want to uncomment the following lines:
 # Git-Descriptor:       ${system-allow-fail;git describe --dirty --always}
 # Git-SHA:              ${system-allow-fail;git rev-list -1 HEAD}
 # -diffignore:          Git-Descriptor,Git-SHA
+Bundle-Copyright: kirschners UG
+Bundle-Vendor: kirschners UG
+Bundle-ContactAddress: http://www.kirschners.de
+
+-removeheaders: Bnd-LastModified, Created-By, Include-Resource, Private-Package, Tool
