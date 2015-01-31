@@ -2,8 +2,9 @@
 
 -sub: *.bnd
 
+#	ee.j2se;version=1.7,\
+
 -buildpath:  \
-	ee.j2se;version=1.7,\
 	osgi.core;version=4.2,\
 	biz.aQute.bnd.annotation,\
 	biz.aQute.bndlib,\

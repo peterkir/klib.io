@@ -1,7 +1,8 @@
 -include: ${workspace}/cnf/global-jdt-sync.properties
 
+#	ee.j2se;version=1.7,\
+
 -buildpath:  \
-	ee.j2se;version=1.7,\
 	osgi.core;version='[4.2,5)',\
 	osgi.cmpn,\
 	biz.aQute.bnd.annotation,\
