@@ -6,8 +6,9 @@ defaultTasks 'generatesettings', 'clean', 'bndbuild'
 //def eeJ2SE_1_7="F:/www/_rt/java/win/x86_64/1.7/jdk1.7.0_60"
 //def eeJ2SE_1_8="F:/www/_rt/java/win/x86_64/1.8/jdk1.8.0_25"
 
-def eeJ2SE_1_7=/usr/lib/jvm/java-7-oracle
-def eeJ2SE_1_8=/usr/lib/jvm/java-8-oracle
+def eeJ2SE_1_6="/usr/lib/jvm/java-6-openjdk"
+def eeJ2SE_1_7="/usr/lib/jvm/java-7-oracle"
+def eeJ2SE_1_8="/usr/lib/jvm/java-8-oracle"
 
 //Add bnd as a build dependency
 buildscript {
