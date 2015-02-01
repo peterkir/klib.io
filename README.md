@@ -1,3 +1,3 @@
 # klib.io
 OSGi bundle library projects
-(https://travis-ci.org/peterkir/klib.io.svg?branch=master)
+[![Build Status](https://travis-ci.org/peterkir/klib.io.png)](https://travis-ci.org/peterkir/klib.io)
