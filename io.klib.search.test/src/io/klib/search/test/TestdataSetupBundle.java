@@ -1,21 +1,18 @@
 package io.klib.search.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TestdataSetupBundle implements BundleActivator {
 
-    public static final String TESTDATA = "testdata";
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    public static final String TESTDATA = "testdata/";
     private BundleContext ctx;
 
     @Override
@@ -23,19 +20,32 @@ public class TestdataSetupBundle implements BundleActivator {
         this.ctx = context;
         Bundle bundle = context.getBundle();
 
-        // copy test data
-        @SuppressWarnings("unchecked")
-        Enumeration<URL> entries = bundle.findEntries(TESTDATA, "*.*", true);
-        if (entries == null) {
-            logger.error("No testdata folder found inside bundle!");
-        } else {
-            while (entries.hasMoreElements()) {
-                URL entryURL = entries.nextElement();
-                File targetFile = context.getDataFile(entryURL.getPath());
-                targetFile.getParentFile().mkdirs();
-                Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        // extract all files
+        String testdataFiles = (String) bundle.getHeaders().get("Testdata-Files");
+        if (testdataFiles != null) {
+            String[] res = testdataFiles.split(",");
+            for (int i = 0; i < res.length; i++) {
+                URL entry = bundle.getEntry(TESTDATA.concat(res[i]));
+                extract(entry);
             }
         }
+        // create all folders (necessary to get empty folders as well
+        String testdataFolder = (String) bundle.getHeaders().get("Testdata-Folder");
+        if (testdataFolder != null) {
+            String[] res = testdataFolder.split(",");
+            for (int i = 0; i < res.length; i++) {
+                File targetFile = ctx.getDataFile(TESTDATA.concat(res[i]));
+                if (!targetFile.exists()) {
+                    targetFile.mkdirs();
+                }
+            }
+        }
+    }
+
+    private void extract(URL entryURL) throws IOException {
+        File targetFile = ctx.getDataFile(entryURL.getPath());
+        targetFile.getParentFile().mkdirs();
+        Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override

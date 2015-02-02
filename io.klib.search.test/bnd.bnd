@@ -18,10 +18,13 @@ Bundle-Activator: io.klib.search.test.TestdataSetupBundle
 Private-Package:  \
 	io.klib.search.test
 
--includeresource: testdata=resources
+-includeresource: testdata=testdata
+Testdata-Files: ${findfile;testdata;*}
+Testdata-Folder: ${lsr;testdata;*}
 
 Test-Cases:  \
 	${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
+
 
 -runfw: org.apache.felix.framework;version='[4,5)'
 -runee: JavaSE-1.7
@@ -34,7 +37,12 @@ Test-Cases:  \
 
 -runvm: -ea -Dlogback.configurationFile=${project}/config/logback.xml
 
+# The properties to control the tester
 -runproperties: \
+	tester.continuous=true, \
+	tester.trace=true, \
+	tester.dir=testdir,\
+	\
     launch.keep=false,\
     launch.storage.dir=rt/cfg,\
     org.osgi.service.http.port=8080,\
@@ -46,7 +54,10 @@ Test-Cases:  \
 	osgi.identity;filter:='(osgi.identity=io.klib.search.test)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
 
+# The magic bundle, will do the real testing is biz.aQute.junit 
 -runbundles:  \
+	biz.aQute.junit,\
+	\
 	org.apache.felix.configadmin;version='[1.8.0,1.8.1)',\
 	org.apache.felix.gogo.command;version='[0.12.0,0.12.1)',\
 	org.apache.felix.gogo.runtime;version='[0.10.0,0.10.1)',\
