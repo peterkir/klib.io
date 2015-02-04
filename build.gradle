@@ -22,12 +22,11 @@ subprojects {
 task jacocoTestReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
     ext.targetProjects = subprojects - project(':cnf') - project (':gradle')
 
-/*	
     dependsOn = ext.targetProjects.test
-*/
+
     sourceDirectories = files(ext.targetProjects.sourceSets.main.allSource.srcDirs)
     classDirectories = files(ext.targetProjects.sourceSets.main.output)
-    executionData = files(ext.targetProjects.jacocoTestReport.executionData)
+    executionData = files('generated/jacoco.exec')
 
     reports {
         html.enabled = true
