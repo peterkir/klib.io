@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="BND Launcher with JaCoCo" default="test" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<dirname property="osDirProject" file="${ant.file}" />
+	<pathconvert property="dirProject" targetos="unix">
+		<path location="${osDirProject}" />
+	</pathconvert>
+	<dirname property="osDirWorkspace" file="${dirProject}" />
+	<pathconvert property="dirWorkspace" targetos="unix">
+		<path location="${osDirWorkspace}" />
+	</pathconvert>
+
+	<property name="src.dir" location="${dirProject}/src" />
+	<property name="bin.dir" location="${dirProject}/bin" />
+	<property name="result.report.dir" location="${dirProject}/generated/site/jacoco" />
+	<property name="result.exec.file" location="${dirProject}/generated/jacoco.exec" />
+
+	<!-- Step 1: Import JaCoCo Ant tasks -->
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${dirWorkspace}/cnf/gradle/jacocoant.jar" />
+	</taskdef>
+
+	<target name="clean">
+		<delete dir="${result.report.dir}" />
+		<delete file="${result.exec.file}" />
+	</target>
+
+	<target name="test">
+		<!-- Step 2: test execution with the JaCoCo coverage task - jacoco is integrated as agent inside the vm arguments of searchIntTest.bndrun -->
+		<java jar="${dirWorkspace}/cnf/biz.aQute.bnd-2.4.0.jar" dir="${dirWorkspace}" fork="true" timeout="180000">
+			<arg line="runtests" />
+			<arg line="${dirProject}/bnd.bnd" />
+		</java>
+		<move todir="${dirProject}/generated" file="${dirWorkspace}/reports" />
+	</target>
+
+	<target name="report" depends="test">
+		<!-- Step 3: Create coverage report -->
+		<jacoco:report>
+
+			<!-- This task needs the collected execution data and ... -->
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<!-- the class files and optional source files ... -->
+			<structure name="JaCoCo Ant Example">
+				<classfiles>
+					<fileset dir="${bin.dir}" />
+					<fileset dir="${dirWorkspace}/io.klib.search/bin" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+					<fileset dir="${dirWorkspace}/io.klib.search/src" />
+				</sourcefiles>
+			</structure>
+
+			<!-- to produce reports in different formats. -->
+			<html destdir="${result.report.dir}" />
+			<csv destfile="${result.report.dir}/report.csv" />
+			<xml destfile="${result.report.dir}/report.xml" />
+		</jacoco:report>
+	</target>
+
+</project>

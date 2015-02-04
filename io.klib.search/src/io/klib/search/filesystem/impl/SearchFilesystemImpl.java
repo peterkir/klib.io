@@ -108,7 +108,7 @@ public class SearchFilesystemImpl implements SearchFilesystem {
                     }
                     zis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -147,7 +147,7 @@ public class SearchFilesystemImpl implements SearchFilesystem {
                         }
                     }
                 } catch (IOException e) {
-                    logger.error("", e);
+                    logger.error(e.getMessage(), e);
                 }
             }
         } else {
@@ -180,8 +180,6 @@ public class SearchFilesystemImpl implements SearchFilesystem {
                         result.inArchives = true;
                         continue;
                     }
-                    if (option == null)
-                        throw new NullPointerException();
                     throw new UnsupportedOperationException("'" + option + "' is not a recognized search option");
                 }
             }

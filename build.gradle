@@ -1,183 +1,47 @@
-import aQute.bnd.build.Workspace
+/*
+ * Master Gradle build script
+ *
+ * Depends on bndWorkspace and bndURI properties set by settings.gradle.
+ */
 
-defaultTasks 'generatesettings', 'clean', 'bndbuild'
-
-//def eeJ2SE_1_6="F:/www/_rt/java/win/x86_64/1.6/jdk1.6.0_45"
-//def eeJ2SE_1_7="F:/www/_rt/java/win/x86_64/1.7/jdk1.7.0_60"
-//def eeJ2SE_1_8="F:/www/_rt/java/win/x86_64/1.8/jdk1.8.0_25"
-
-def eeJ2SE_1_6="/usr/lib/jvm/java-6-openjdk"
-def eeJ2SE_1_7="/usr/lib/jvm/java-7-oracle"
-def eeJ2SE_1_8="/usr/lib/jvm/java-8-oracle"
-
-//Add bnd as a build dependency
+/* Add bnd as a script dependency */
 buildscript {
-    dependencies {
-        classpath files('cnf/gradle/biz.aQute.bnd.gradle.jar')
-    }
+  dependencies {
+    classpath files(bndURI)
+  }
 }
 
-//Generate settings.gradle containing all projects
-task generatesettings << {
-    def f = new File('.')
-    def bndProjects = []
-    f.eachFile { 
-        if(new File(it, 'bnd.bnd').exists()) {
-            bndProjects << it.name
-        } 
-    }
-	
-    def settingsFile = new File('settings.gradle')
-    settingsFile.text = 'include '
-
-    bndProjects.eachWithIndex { item,idx ->
-        if(idx > 0) {
-            settingsFile << ', '
-        }
-
-        settingsFile << "'$item'"
-    }
-}	
-
-
-
-//Setup the workspace
-Workspace workspace
-def parentDir = project.projectDir
-    
-workspace = Workspace.getWorkspace(parentDir)
-
-subprojects { p ->
-    apply plugin: 'java'
-
-    repositories {
-		flatDir {
-			dirs parentDir.getAbsolutePath() + '/cnf/gradle'
-		}
-    }
-
-	configurations {
-		ecj
-	}
-	
-	dependencies {
-		ecj 'org.eclipse.jdt:ecj:4.4.1'
-	}
-	
-    aQute.bnd.build.Project bndProject
-    bndProject = workspace.getProject(p.projectDir)
-
-	compileJava {
-		// reading the eclipse jdt settings
-		Properties jdtSettings = new Properties()
-		jdtSettings.load(project.file(".settings/org.eclipse.jdt.core.prefs").newDataInputStream())
-		
-		def srcLevel = jdtSettings.getProperty('org.eclipse.jdt.core.compiler.source')
-		def jrePath
-		switch (srcLevel) {
-			case "1.6":
-				jrePath = eeJ2SE_1_6
-				break
-			case "1.7":
-				jrePath = eeJ2SE_1_7
-				break
-			case "1.8":
-				jrePath = eeJ2SE_1_8
-				break
-			default:
-				ant.fail(message:"no valid vm specified")
-		}
-		
-		jrePath = jrePath + '/jre/lib/'
-		def sep = System.getProperty('path.separator');
-		options.bootClasspath  = 
-			jrePath + 'rt.jar' + sep +
-			jrePath + 'resources.jar' + sep +
-			jrePath + 'jsse.jar' + sep +
-			jrePath + 'jce.jar' + sep +
-			jrePath + 'charsets.jar' + sep +
-			jrePath + 'ext/dnsns.jar' + sep +
-			jrePath + 'ext/localedata.jar' + sep +
-			jrePath + 'ext/sunjce_provider.jar' + sep +
-			jrePath + 'ext/sunmscapi.jar'
-		
-		options.encoding = 'utf-8'
-		options.compilerArgs = ['-properties', project.file(".settings/org.eclipse.jdt.core.prefs")]
-		options.fork = true
-		doFirst {
-			options.forkOptions.with {
-			executable = 'java'
-			jvmArgs = [ '-cp', configurations.ecj.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main' ]
-			}
-		}
-	}
-
-    //Setup source and target directories
-    sourceSets.main.java.srcDirs = ['src']
-    sourceSets.main.resources.srcDirs = ['src']
-    sourceSets.test.java.srcDirs = ['test']
-    sourceSets.test.resources.srcDirs = ['test']    
-    sourceSets.main.output.classesDir = 'bin'
-    sourceSets.main.output.resourcesDir = 'bin'
-    sourceSets.test.output.classesDir = 'bin_test'
-    sourceSets.test.output.resourcesDir = 'bin_test'
-
-    testResultsDirName = 'generated/test-reports'
-
-    //Setup project dependencies
-    bndProject.getDependson().each {
-        compileJava.dependsOn(':' +  it.name + ':bndbuild')
-    }
-
-    bndProject.getBuildpath().each {
-        dependencies.add('compile', files(it.getFile()))
-    }
-
-    //Add junit as a default dependency
-    dependencies.add('testCompile', 'junit:junit:4.+')
-
-    //Perform the actual bnd build
-    task bndbuild << { task ->
-        bndProject.build()
-
-        //Report errors and warnings to the Gradle output
-        bndProject.getWarnings().each {
-            logger.warn it
-        }
-
-        bndProject.getErrors().each {
-            logger.error it
-        }
-        
-        //Fail the build if there are build errors
-        if(bndProject.getErrors()) {
-            throw new  GradleException("Bnd build failure. Check build logs for error messages")
-        }
-    }
-
-    bndbuild.dependsOn(['compileJava','processResources'])
-
-    //Run integration tests
-    task bndtest << { task -> 
-        if(bndProject.getProperty("Test-Cases")) {
-            bndProject.test();
-        }
-    }
-
-    clean.doLast {
-        p.file('generated').deleteDir()
-    }
+/* Configure the subprojects */
+subprojects {
+  def bndProject = bndWorkspace.getProject(name)
+  if (bndProject != null) {
+    plugins.apply 'biz.aQute.bnd'
+  }
 }
 
-//Collect generated and external bundles for deployment
-task release() << {
-    delete "release"
+task jacocoTestReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    ext.targetProjects = subprojects - project(':cnf') - project (':gradle')
 
-    ant.taskdef(name: 'bndrelease', classname: 'aQute.bnd.ant.RunconfigToDistributionTask', classpath: 'cnf/plugins/biz.aQute.bnd/biz.aQute.bnd-2.4.0.jar')
-    ant.bndrelease(allowsnapshots: true, bndfile: 'run/webshop.bndrun', rootdir: './', outputdir: 'release')   
-}
+/*	
+    dependsOn = ext.targetProjects.test
+*/
+    sourceDirectories = files(ext.targetProjects.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(ext.targetProjects.sourceSets.main.output)
+    executionData = files(ext.targetProjects.jacocoTestReport.executionData)
 
-//Generate a Gradle wrapper
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+
+    onlyIf = {
+        true
+    }
+
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
 }
