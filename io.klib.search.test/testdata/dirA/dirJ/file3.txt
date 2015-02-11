@@ -1,2 +1,2 @@
-this is a file without new
+this is a file with a new
 line
