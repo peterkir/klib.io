@@ -25,7 +25,6 @@ public class TestdataSetupBundle implements BundleActivator {
         String testdataFiles = (String) bundle.getHeaders().get("Testdata-Files");
         if (testdataFiles != null) {
             String[] res = testdataFiles.split(",");
-            URL entry;
             for (int i = 0; i < res.length; i++) {
 
                 String dataFile = res[i].trim();
@@ -33,15 +32,15 @@ public class TestdataSetupBundle implements BundleActivator {
                     File dataDir = ctx.getDataFile(dataFile.replace(EMPTY, ""));
                     dataDir.mkdirs();
                 } else {
-                    entry = bundle.getEntry(dataFile);
-                    extract(entry);
+                    extract(dataFile);
                 }
             }
         }
     }
 
-    private void extract(URL entryURL) throws IOException {
-        File targetFile = ctx.getDataFile(entryURL.getPath());
+    private void extract(String dataFile) throws IOException {
+        URL entryURL = ctx.getBundle().getResource(dataFile);
+        File targetFile = ctx.getDataFile(dataFile);
         targetFile.mkdirs();
         Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
