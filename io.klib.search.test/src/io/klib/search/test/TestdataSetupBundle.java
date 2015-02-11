@@ -39,7 +39,7 @@ public class TestdataSetupBundle implements BundleActivator {
     }
 
     private void extract(String dataFile) throws IOException {
-        URL entryURL = ctx.getBundle().getResource(dataFile);
+        URL entryURL = ctx.getBundle().getEntry(dataFile);
         File targetFile = ctx.getDataFile(dataFile);
         targetFile.mkdirs();
         Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
