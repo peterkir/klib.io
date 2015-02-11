@@ -18,29 +18,3 @@ subprojects {
     plugins.apply 'biz.aQute.bnd'
   }
 }
-
-task jacocoTestReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-    ext.targetProjects = subprojects - project(':cnf') - project (':gradle')
-
-    dependsOn = ext.targetProjects.test
-
-    sourceDirectories = files(ext.targetProjects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(ext.targetProjects.sourceSets.main.output)
-    executionData = files('generated/jacoco.exec')
-
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
-    }
-
-    onlyIf = {
-        true
-    }
-
-    doFirst {
-        executionData = files(executionData.findAll {
-            it.exists()
-        })
-    }
-}
