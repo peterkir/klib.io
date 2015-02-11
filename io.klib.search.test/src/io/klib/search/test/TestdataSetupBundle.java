@@ -44,7 +44,10 @@ public class TestdataSetupBundle implements BundleActivator {
 
     private void extract(URL entryURL) throws IOException {
         File targetFile = ctx.getDataFile(entryURL.getPath());
-        targetFile.getParentFile().mkdirs();
+        File parentFile = targetFile.getParentFile();
+        if (parentFile != null) {
+            parentFile.mkdirs();
+        }
         Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
