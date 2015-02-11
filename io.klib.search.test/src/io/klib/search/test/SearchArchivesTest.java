@@ -52,8 +52,8 @@ public class SearchArchivesTest extends TestCase {
     public void testArchiveContentSearch() throws Exception {
         Set<URI> expected = new HashSet<URI>();
         // //@formatter:off
-        expected.add(testfile("/dirA/dirJ/file3.txt"));
-        expected.add(jarfile("zip_dirA.zip!/dirA/dirJ/file3.txt"));
+        expected.add(testfile("/dirA/dirJ/fileWithWindowsNewLine.txt"));
+        expected.add(jarfile("zip_dirA.zip!/dirA/dirJ/fileWithWindowsNewLine.txt"));
         // //@formatter:on
 
         Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", ".*new\\r\\n?line.*", new SearchOption[] {

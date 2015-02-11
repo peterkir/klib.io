@@ -55,7 +55,8 @@ public class SearchFilesTest extends TestCase {
         Set<URI> expected = new HashSet<URI>();
         // //@formatter:off
         expected.addAll(testfiles(new String[] { "file1.txt", "/dirA/dirJ/file1.txt", "/dirA/dirJ/file2.txt",
-                "/dirA/dirJ/file3.txt", "/dirA/dirK/file1.txt", "/dirB/file2.txt" }));
+                "/dirA/dirJ/fileWithWindowsNewLine.txt", "/dirA/dirJ/fileWithUnixNewLine.txt", "/dirA/dirK/file1.txt",
+                "/dirB/file2.txt" }));
         // //@formatter:on
 
         Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", null, SearchOption.RECURSE);
@@ -66,9 +67,10 @@ public class SearchFilesTest extends TestCase {
         Set<URI> expected = new HashSet<URI>();
         // //@formatter:off
         expected.addAll(testfiles(new String[] { "fileWithOutExtension", "file1.txt", "zip_dirA.zip", "zip_dirB.zip",
-                "/dirA/", "/dirA/dirJ", "/dirA/dirJ/file1.txt", "/dirA/dirJ/file3.txt", "/dirA/dirK/",
-                "/dirA/dirK/file1.txt", "/dirB/", "/dirB/file2.txt", "/dirC/", "/dirC/dirC", "/dirD/",
-                "dirD/.gitignore", "/dirC/fileWithOutExtension", "/dirC/osgi.core-4.0.1.jar", "/dirC/zip_dirB.zip" }));
+                "/dirA/", "/dirA/dirJ", "/dirA/dirJ/file1.txt", "/dirA/dirJ/fileWithWindowsNewLine.txt",
+                "/dirA/dirJ/fileWithUnixNewLine.txt", "/dirA/dirK/", "/dirA/dirK/file1.txt", "/dirB/",
+                "/dirB/file2.txt", "/dirC/", "/dirC/dirC", "/dirD/", "dirD/.gitignore", "/dirC/fileWithOutExtension",
+                "/dirC/osgi.core-4.0.1.jar", "/dirC/zip_dirB.zip" }));
         // //@formatter:on
 
         Set<URI> found = searchFS.find(TESTDIR, "^(?!(.*/dirA/dirJ/file2.txt)).+$", null, SearchOption.RECURSE);

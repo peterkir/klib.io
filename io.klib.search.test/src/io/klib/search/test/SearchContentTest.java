@@ -56,7 +56,7 @@ public class SearchContentTest extends TestCase {
 
     public void testContentSearchWithLinebreak() throws Exception {
         Set<URI> expected = new HashSet<URI>();
-        expected.add(testfile("/dirA/dirJ/file3.txt"));
+        expected.add(testfile("/dirA/dirJ/fileWithWindowsNewLine.txt"));
 
         Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", ".*new\\r\\nline.*", SearchOption.RECURSE);
         assertEquals(expected, found);
