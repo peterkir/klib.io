@@ -56,7 +56,7 @@ public class SearchArchivesTest extends TestCase {
         expected.add(jarfile("zip_dirA.zip!/dirA/dirJ/file3.txt"));
         // //@formatter:on
 
-        Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", ".*new\\r\\nline.*", new SearchOption[] {
+        Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", ".*new\\r\\n?line.*", new SearchOption[] {
                 SearchOption.RECURSE, SearchOption.ARCHIVE });
         assertEquals(expected, found);
     }
