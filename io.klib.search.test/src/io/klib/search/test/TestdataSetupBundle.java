@@ -12,6 +12,7 @@ import org.osgi.framework.BundleContext;
 
 public class TestdataSetupBundle implements BundleActivator {
 
+    private static final String EMPTY = "<<EMPTY>>";
     public static final String TESTDATA = "testdata/";
     private BundleContext ctx;
 
@@ -24,19 +25,16 @@ public class TestdataSetupBundle implements BundleActivator {
         String testdataFiles = (String) bundle.getHeaders().get("Testdata-Files");
         if (testdataFiles != null) {
             String[] res = testdataFiles.split(",");
+            URL entry;
             for (int i = 0; i < res.length; i++) {
-                URL entry = bundle.getEntry(TESTDATA.concat(res[i]));
-                extract(entry);
-            }
-        }
-        // create all folders (necessary to get empty folders as well
-        String testdataFolder = (String) bundle.getHeaders().get("Testdata-Folder");
-        if (testdataFolder != null) {
-            String[] res = testdataFolder.split(",");
-            for (int i = 0; i < res.length; i++) {
-                File targetFile = ctx.getDataFile(TESTDATA.concat(res[i]));
-                if (!targetFile.exists()) {
-                    targetFile.mkdirs();
+
+                String dataFile = res[i].trim();
+                if (dataFile.contains(EMPTY)) {
+                    File dataDir = ctx.getDataFile(dataFile.replace(EMPTY, ""));
+                    dataDir.mkdirs();
+                } else {
+                    entry = bundle.getEntry(dataFile);
+                    extract(entry);
                 }
             }
         }
@@ -45,19 +43,13 @@ public class TestdataSetupBundle implements BundleActivator {
     private void extract(URL entryURL) throws IOException {
         File targetFile = ctx.getDataFile(entryURL.getPath());
         File parentFile = targetFile.getParentFile();
-        if (parentFile != null) {
-            parentFile.mkdirs();
-        }
+        parentFile.mkdirs();
         Files.copy(entryURL.openStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
     public void stop(BundleContext context) throws Exception {
         // TODO Auto-generated method stub
-    }
-
-    public File getTestDataLocation() {
-        return ctx.getDataFile(TESTDATA);
     }
 
 }

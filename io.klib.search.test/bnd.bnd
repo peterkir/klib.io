@@ -19,8 +19,7 @@ Private-Package:  io.klib.search.test
 Test-Cases:  ${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
 	
 -includeresource: testdata=testdata
-Testdata-Files: ${findfile;testdata;*}
-Testdata-Folder: ${lsr;testdata;*}
+Testdata-Files: ${findpath;testdata/.*} 
 
 ### the following properties are used for the integration test execution
 
