@@ -16,5 +16,7 @@ env:
 before_script:
   - "gem install travis-artifacts"
 
+export ARTIFACTS_PATHS="$(git ls-files -o | tr "\n" ":")"
+  
 after_script:
-  - "travis-artifacts upload --path /home/travis/build/peterkir/klib.io"
+  - "travis-artifacts upload --path $ARTIFACTS_PATHS --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID"
