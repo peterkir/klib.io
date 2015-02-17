@@ -51,10 +51,8 @@ public class SearchArchivesTest extends TestCase {
 
     public void testArchiveContentSearch() throws Exception {
         Set<URI> expected = new HashSet<URI>();
-        // //@formatter:off
         expected.add(testfile("/dirA/dirJ/fileWithWindowsNewLine.txt"));
         expected.add(jarfile("zip_dirA.zip!/dirA/dirJ/fileWithWindowsNewLine.txt"));
-        // //@formatter:on
 
         Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", ".*new\\r\\n?line.*", new SearchOption[] {
                 SearchOption.RECURSE, SearchOption.ARCHIVE });
@@ -63,9 +61,7 @@ public class SearchArchivesTest extends TestCase {
 
     public void testArchiveContentDotAllSearch() throws Exception {
         Set<URI> expected = new HashSet<URI>();
-        // //@formatter:off
         expected.add(jarfile("dirC/osgi.core-4.0.1.jar!/META-INF/MANIFEST.MF"));
-        // //@formatter:on
 
         // searching for text wrapped "org.osgi.service.startlevel" from
         // MANIFEST.MF
