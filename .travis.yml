@@ -8,7 +8,7 @@ before_install:
 
 env:
   global:
-  - "ARTIFACTS_AWS_REGION=frankfurt"
+  - "ARTIFACTS_AWS_REGION=Frankfurt"
   - "ARTIFACTS_S3_BUCKET=klib.io"
   - secure: HQrbpC4OrjlCUCj8FvCd3R5KrheitUjiOuG1gxMXqn65Xvz62Ah2VubqRJwMjOM/diqpSOsFpLiSB1fO/JMDpxqeNZT7x7NE3V13Eyyt0Dr6yX0OdXHR9t663W8b192UHJDk43pUxy0eHkN52sqToVZ5SwWh707BGFcZjo/dqSI=
   - secure: MqiLusHLeQESXQUdIhIYWDG4gGdys6j5m2VagzKKSEri9pXu7HqmHkJjRqsIxlhn+fGQviV8eRRIB2T0zlsmR+l0ZfdvtI65zwe1M8QcjS4NMuJ38kcbuDP0tvq3vZd9NgVx4NUI8SCt9sfCnrnpBUg50BdfBa4Qg316vTmu8iw=
