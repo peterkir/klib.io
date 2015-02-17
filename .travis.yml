@@ -13,6 +13,7 @@ addons:
 deploy:
   provider: s3
   region: Frankfurt
+  endpoint: "klib.io.s3-eu-central-1.amazonaws.com"
   access_key_id:
     secure: HQrbpC4OrjlCUCj8FvCd3R5KrheitUjiOuG1gxMXqn65Xvz62Ah2VubqRJwMjOM/diqpSOsFpLiSB1fO/JMDpxqeNZT7x7NE3V13Eyyt0Dr6yX0OdXHR9t663W8b192UHJDk43pUxy0eHkN52sqToVZ5SwWh707BGFcZjo/dqSI=
   secret_access_key:
