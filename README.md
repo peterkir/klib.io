@@ -3,3 +3,5 @@
 # klib.io
 OSGi bundle library projects
 
+- FileSearch service [ service, gogo ]
+
