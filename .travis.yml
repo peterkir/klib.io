@@ -12,6 +12,7 @@ deploy:
   region: eu-west-1  
   local-dir: "/home/travis/build/peterkir/klib.io"
   upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
+  skip_cleanup: true
   acl: public_read
   on:
     repo: peterkir/klib.io
