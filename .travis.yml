@@ -13,7 +13,7 @@ deploy:
     secure: frLJglOKleJZWLg+SSaidVF+YEyC10qzc/rLlrI9Dltjcid3JMFd8gkB21tZdW9bP9HYpDw6cjNAvQoiYia+PXm3hNau6FelDK5s76g9xkyY2Il2occMM/icQBizVxEACHWo3zQgB2hlJbgn3Y0IOJuVhr7ioxLzxovfvq+wJdg=
   bucket: klib.io
   region: eu-west-1
-  local_dir: /home/travis/build/peterkir/eval/
+  local_dir: /home/travis/build/peterkir/klib.io
   upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
   skip_cleanup: true
   acl: public_read
