@@ -1,19 +1,16 @@
 language: java
-
 jdk:
 - oraclejdk7
-
 before_install:
 - chmod +x gradlew
-
 deploy:
   provider: s3
   access_key_id: AKIAI6FGWB26WLJZHBRQ
   secret_access_key:
-    secure: frLJglOKleJZWLg+SSaidVF+YEyC10qzc/rLlrI9Dltjcid3JMFd8gkB21tZdW9bP9HYpDw6cjNAvQoiYia+PXm3hNau6FelDK5s76g9xkyY2Il2occMM/icQBizVxEACHWo3zQgB2hlJbgn3Y0IOJuVhr7ioxLzxovfvq+wJdg=
+    secure: g5+fYcWViFqKZ15/HUYaxGtmFAVxPw3h4UomNZegt++3dgN2yIahUSPtNtsy0qVlZ5UNSHkzMSnQNMMDQXP0EhvAgHHloZxligd/NZk/hWOoQLekS+eFm4gTMZj9MEK7hTDLsbWVPAry2MRZmQWNuorlQWoj+T/CB4ojSpOm1Sg=
   bucket: klib.io
   region: eu-west-1
-  local_dir: /home/travis/build/peterkir/klib.io
+  local-dir: "/home/travis/build/peterkir/klib.io"
   upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
   skip_cleanup: true
   acl: public_read
