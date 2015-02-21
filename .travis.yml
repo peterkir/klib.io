@@ -7,12 +7,10 @@ deploy:
   provider: s3
   access_key_id: AKIAI6FGWB26WLJZHBRQ
   secret_access_key:
-    secure: kr5tIw/lIGHSIfQLndU7E94GLnOR5GgizFuS52155MZUzh9psg61OicniQb5AGku9WeHrW7UDCuWBNcx5NKftMbpVX2Lmaq5Wypve6Qf9wV16/qss0e5jCPJWIvH1l0QZsgXHWu0gZNMZFXo7oMqhXn65GFF97+L54JgfZaGFWI=
+    secure: V6LtYfj+HXk3iKxK9oEtk7XmHTczwy7gGkIphJOGTAfmz7MtggHC43NDUpRkYdlmxOlOPEbyxaEOOSIyCWipYqak0AUWesWUpTHsnKnmRzOOb+f9srXEBzreAj452zCxgVj5EHdXaC5c/D2N/0ipwqPrOyzMHRMu3gkKy1vvjAo=
   bucket: klib.io
-  region: eu-west-1  
-  local-dir: "/home/travis/build/peterkir/klib.io"
+  local-dir: '"/home/travis/build/peterkir/klib.io"'
   upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
-  skip_cleanup: true
   acl: public_read
   on:
     repo: peterkir/klib.io
