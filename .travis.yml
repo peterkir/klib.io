@@ -1,22 +1,18 @@
 language: java
-
 jdk:
 - oraclejdk7
-
 before_install:
 - chmod +x gradlew
-
-addons:
-  artifacts: true
-  debug: true
-
 deploy:
   provider: s3
-  region: Frankfurt
-  endpoint: "klib.io.s3.amazonaws.com"
-  access_key_id:
-    secure: HQrbpC4OrjlCUCj8FvCd3R5KrheitUjiOuG1gxMXqn65Xvz62Ah2VubqRJwMjOM/diqpSOsFpLiSB1fO/JMDpxqeNZT7x7NE3V13Eyyt0Dr6yX0OdXHR9t663W8b192UHJDk43pUxy0eHkN52sqToVZ5SwWh707BGFcZjo/dqSI=
+  access_key_id: AKIAI6FGWB26WLJZHBRQ
   secret_access_key:
-    secure: MqiLusHLeQESXQUdIhIYWDG4gGdys6j5m2VagzKKSEri9pXu7HqmHkJjRqsIxlhn+fGQviV8eRRIB2T0zlsmR+l0ZfdvtI65zwe1M8QcjS4NMuJ38kcbuDP0tvq3vZd9NgVx4NUI8SCt9sfCnrnpBUg50BdfBa4Qg316vTmu8iw=
-  acl: public_read
+    secure: V6LtYfj+HXk3iKxK9oEtk7XmHTczwy7gGkIphJOGTAfmz7MtggHC43NDUpRkYdlmxOlOPEbyxaEOOSIyCWipYqak0AUWesWUpTHsnKnmRzOOb+f9srXEBzreAj452zCxgVj5EHdXaC5c/D2N/0ipwqPrOyzMHRMu3gkKy1vvjAo=
+  bucket: klib.io
+  region: eu-west-1  
+  local-dir: "/home/travis/build/peterkir/klib.io"
+  upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
   skip_cleanup: true
+  acl: public_read
+  on:
+    repo: peterkir/klib.io

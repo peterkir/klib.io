@@ -18,8 +18,8 @@ Test-Cases: ${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
 -runvm: -ea -Dlogback.configurationFile=${project}/config/logback.xml
 
 -runproperties: \
-	tester.continuous=true, \
-	tester.trace=true, \
+	tester.continuous=false,\
+	tester.trace=true,\
 	tester.dir=testdir,\
 	\
     launch.keep=false,\
@@ -42,7 +42,7 @@ Test-Cases: ${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
 	org.apache.felix.scr;version='[1.8.0,2)',\
 	\
 	junit.osgi,\
-    \
+	\
     slf4j.api,\
     log4j.over.slf4j,\
     ch.qos.logback.core,\
