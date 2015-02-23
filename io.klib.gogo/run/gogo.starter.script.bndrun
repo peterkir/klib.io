@@ -1,0 +1,28 @@
+-runfw: org.apache.felix.framework;version='[4,5)'
+-runee: JavaSE-1.8
+-runsystemcapabilities: ${native_capability}
+
+-resolve.effective: active
+
+-runbundles:\
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.gogo.shell,\
+	org.apache.felix.gogo.command,\
+    org.apache.felix.scr,\
+    \
+    slf4j.api,\
+    ch.qos.logback.core,\
+    ch.qos.logback.classic,\
+    \
+    io.klib.gogo.starter.script;version=latest
+
+-runprogramargs: \
+    gogoScripts \
+    ../gogoScripts/script1.gogo \
+    ../gogoScripts/script2.gogo
+
+-runproperties: \
+    launch.keep=false,\
+    launch.storage.dir=${project}/rt/launchScript,\
+    osgi.console=,\
+    eclipse.consoleLog=

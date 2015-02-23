@@ -1,0 +1,36 @@
+// this is a comment
+echo \# executing script1.gogo 
+echo
+
+echo \# ls
+ls
+
+echo
+echo \# variable usage e.g. var=1
+var=1
+echo e.g. echo \$var
+echo $var
+
+echo
+echo \# lists e.g. list = [1 2 a b]
+list = [1 2 a b]
+echo echo \$list
+echo $list
+
+echo
+echo \# maps e.g. map = [Jan=1 Feb=2 Mar=3]
+map = [Jan=1 Feb=2 Mar=3]
+echo echo $map
+echo $map
+
+echo
+echo \# pipes
+echo e.g. bundles | grep gogo
+bundles | grep gogo
+
+echo
+echo \# closures - {}
+echo e.g. echo2 = { echo xxx $args yyy }
+echo2 = { echo xxx $args yyy }
+echo e.g. echo2 hello world
+echo2 hello world

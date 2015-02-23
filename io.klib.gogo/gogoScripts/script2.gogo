@@ -1,0 +1,30 @@
+// http://felix.apache.org/site/rfc-147-overview.html#RFC147Overview-LeveragesexistingJavacapabilities%252Cviareflection.
+// http://mail-archives.apache.org/mod_mbox/felix-dev/201012.mbox/%3C19829745.77971292149380736.JavaMail.jira@thor%3E
+echo
+echo \# executing script2.gogo
+echo
+
+echo \# Leverages existing Java capabilities, via reflection.
+echo
+
+echo \# loading bundle methods into context
+addcommand context (bundle) 
+
+echo \# read version with context:version
+echo (context:version)
+
+echo
+echo addcommand system ((bundle) loadClass java.lang.System) 
+addcommand system ((bundle) loadClass java.lang.System) 
+
+echo
+echo system:getproperties
+echo (system:getproperties)
+
+echo
+echo system:getproperty file.encoding
+echo (system:getproperty file.encoding)
+
+echo
+echo stopping framework
+stop 0

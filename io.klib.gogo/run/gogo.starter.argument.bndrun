@@ -1,0 +1,22 @@
+-runfw: org.apache.felix.framework;version='[4,5)'
+-runee: JavaSE-1.8
+-runsystemcapabilities: ${native_capability}
+
+-resolve.effective: active
+
+-runbundles:\
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.gogo.shell,\
+	org.apache.felix.gogo.command,\
+	org.apache.felix.scr,\
+	\
+	io.klib.gogo.starter.arguments;version=latest
+
+-runprogramargs: \
+    gogo:echo it works - we executed this gogo command via a program argument\!
+
+-runproperties: \
+    launch.keep=false,\
+    launch.storage.dir=${project}/rt/launchArg,\
+    osgi.console=,\
+    eclipse.consoleLog=
