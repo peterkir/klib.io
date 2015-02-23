@@ -34,14 +34,14 @@ Test-Cases: ${classes;CONCRETE;EXTENDS;junit.framework.TestCase}
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.metatype)',\
 
 -runbundles:  \
-	biz.aQute.junit,\
-	\
 	org.apache.felix.configadmin;version='[1.8.0,1.8.1)',\
 	org.apache.felix.gogo.command;version='[0.12.0,0.12.1)',\
 	org.apache.felix.gogo.runtime;version='[0.10.0,0.10.1)',\
 	org.apache.felix.gogo.shell;version='[0.10.0,0.10.1)',\
 	org.apache.felix.metatype;version='[1.0.4,1.0.5)',\
 	org.apache.felix.scr;version='[1.8.0,2)',\
+	\
+	junit.osgi,\
     \
     slf4j.api,\
     log4j.over.slf4j,\

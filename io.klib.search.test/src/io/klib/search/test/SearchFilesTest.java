@@ -17,76 +17,99 @@ import org.osgi.framework.ServiceReference;
 
 public class SearchFilesTest extends TestCase {
 
-    private SearchFilesystem searchFS;
-    private File TESTDIR;
+	// @formatter:off
+	private SearchFilesystem searchFS;
+	private File TESTDIR;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
 
-        BundleContext ctx = FrameworkUtil.getBundle(TestdataSetupBundle.class).getBundleContext();
-        TESTDIR = ctx.getDataFile(TestdataSetupBundle.TESTDATA);
-        assertTrue(TESTDIR.exists());
+		BundleContext ctx = FrameworkUtil.getBundle(TestdataSetupBundle.class).getBundleContext();
+		TESTDIR = ctx.getDataFile(TestdataSetupBundle.TESTDATA);
+		assertTrue(TESTDIR.exists());
 
-        ServiceReference ref = ctx.getServiceReference(SearchFilesystem.class.getName());
-        assertNotNull(ref);
-        searchFS = (SearchFilesystem) ctx.getService(ref);
-        assertNotNull(searchFS);
-    }
+		ServiceReference ref = ctx.getServiceReference(SearchFilesystem.class.getName());
+		assertNotNull(ref);
+		searchFS = (SearchFilesystem) ctx.getService(ref);
+		assertNotNull(searchFS);
+	}
 
-    public void testFlatFileSearch() throws Exception {
-        Set<URI> expected = new HashSet<URI>();
-        expected.add(testfile("file1.txt"));
+	public void testFlatFileSearch() throws Exception {
+		Set<URI> expected = new HashSet<URI>();
+		expected.add(testfile("file1.txt"));
 
-        Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", null, (SearchOption[]) null);
-        assertEquals(expected, found);
-    }
+		Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", null, (SearchOption[]) null);
+		assertEquals(expected, found);
+	}
 
-    public void testSearchForForFileWithoutExtension() throws Exception {
-        Set<URI> expected = new HashSet<URI>();
-        expected.add(testfile("/fileWithOutExtension"));
-        expected.add(testfile("/dirC/fileWithOutExtension"));
+	public void testSearchForForFileWithoutExtension() throws Exception {
+		Set<URI> expected = new HashSet<URI>();
+		expected.add(testfile("/fileWithOutExtension"));
+		expected.add(testfile("/dirC/fileWithOutExtension"));
 
-        Set<URI> found = searchFS.find(TESTDIR, ".*fileWithOutExtension", null, SearchOption.RECURSE);
-        assertEquals(expected, found);
-    }
+		Set<URI> found = searchFS.find(TESTDIR, ".*fileWithOutExtension", null, SearchOption.RECURSE);
+		assertEquals(expected, found);
+	}
 
-    public void testRecursiveFileSearch() throws Exception {
-        Set<URI> expected = new HashSet<URI>();
-        // //@formatter:off
-        expected.addAll(testfiles(new String[] { "file1.txt", "/dirA/dirJ/file1.txt", "/dirA/dirJ/file2.txt",
-                "/dirA/dirJ/fileWithWindowsNewLine.txt", "/dirA/dirJ/fileWithUnixNewLine.txt", "/dirA/dirK/file1.txt",
-                "/dirB/file2.txt" }));
-        // //@formatter:on
+	public void testRecursiveFileSearch() throws Exception {
+		Set<URI> expected = new HashSet<URI>();
+        expected.addAll(testfiles(new String[] { 
+        		"file1.txt"
+        		, "/dirA/dirJ/file1.txt"
+        		, "/dirA/dirJ/file2.txt"
+        		, "/dirA/dirJ/fileWithWindowsNewLine.txt"
+        		, "/dirA/dirJ/fileWithUnixNewLine.txt"
+        		, "/dirA/dirK/file1.txt"
+        		, "/dirB/file2.txt" 
+        }));
 
-        Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", null, SearchOption.RECURSE);
-        assertEquals(expected, found);
-    }
+		Set<URI> found = searchFS.find(TESTDIR, ".*\\.txt", null, SearchOption.RECURSE);
+		assertEquals(expected, found);
+	}
 
-    public void testRecursiveNegatedFileSearch() throws Exception {
-        Set<URI> expected = new HashSet<URI>();
-        // //@formatter:off
-        expected.addAll(testfiles(new String[] { "fileWithOutExtension", "file1.txt", "zip_dirA.zip", "zip_dirB.zip",
-                "/dirA/", "/dirA/dirJ", "/dirA/dirJ/file1.txt", "/dirA/dirJ/fileWithWindowsNewLine.txt",
-                "/dirA/dirJ/fileWithUnixNewLine.txt", "/dirA/dirK/", "/dirA/dirK/file1.txt", "/dirB/",
-                "/dirB/file2.txt", "/dirC/", "/dirC/dirC", "/dirD/", "dirD/.gitignore", "/dirC/fileWithOutExtension",
-                "/dirC/osgi.core-4.0.1.jar", "/dirC/zip_dirB.zip" }));
-        // //@formatter:on
+	/**
+	 * find everything but file "/dirA/dirJ/file2.txt"
+	 */
+	public void testRecursiveNegatedFileSearch() throws Exception {
+		Set<URI> expected = new HashSet<URI>();
+        expected.addAll(testfiles(new String[] { 
+        		"/dirA/"
+        		, "/dirA/dirJ"
+        		, "/dirA/dirJ/file1.txt"
+        		, "/dirA/dirJ/fileWithWindowsNewLine.txt"
+        		, "/dirA/dirJ/fileWithUnixNewLine.txt"
+        		, "/dirA/dirK/"
+        		, "/dirA/dirK/file1.txt"
+        		, "/dirB/"
+        		, "/dirB/file2.txt"
+        		, "/dirC/"
+        		, "/dirC/dirC"
+        		, "/dirD/"
+        		, "dirD/.gitignore"
+        		, "/dirC/fileWithOutExtension"
+        		, "/dirC/osgi.core-4.0.1.jar"
+        		, "/dirC/zip_dirB.zip" 
+        		, "fileWithOutExtension"
+        		, "file1.txt"
+        		, "zip_dirA.zip"
+        		, "zip_dirB.zip"
+        }));
 
-        Set<URI> found = searchFS.find(TESTDIR, "^(?!(.*/dirA/dirJ/file2.txt)).+$", null, SearchOption.RECURSE);
-        assertEquals(expected, found);
-    }
+		Set<URI> found = searchFS.find(TESTDIR, "^(?!(.*/dirA/dirJ/file2.txt)).+$", null, SearchOption.RECURSE);
+		assertEquals(expected, found);
+	}
 
-    private URI testfile(final String subpath) {
-        return Paths.get(TESTDIR.getPath(), subpath).toUri();
-    }
+	private URI testfile(final String subpath) {
+		return Paths.get(TESTDIR.getPath(), subpath).toUri();
+	}
 
-    private Set<URI> testfiles(final String[] subpaths) {
-        final Set<URI> result = new HashSet<>();
-        for (final String subpath : subpaths) {
-            result.add(testfile(subpath));
-        }
-        return result;
-    }
-
+	private Set<URI> testfiles(final String[] subpaths) {
+		final Set<URI> result = new HashSet<>();
+		for (final String subpath : subpaths) {
+			result.add(testfile(subpath));
+		}
+		return result;
+	}
+	//@formatter:off
 }

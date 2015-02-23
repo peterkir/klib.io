@@ -46,7 +46,7 @@ prj=${replace;${project};(\\\\);/}
 	org.apache.felix.scr;version='[1.8.0,2)',\
 	\
 	junit.osgi,\
-	\
+    \
     slf4j.api,\
     log4j.over.slf4j,\
     ch.qos.logback.core,\
