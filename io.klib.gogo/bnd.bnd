@@ -1,0 +1,13 @@
+-include: ${workspace}/cnf/global-jdt-sync.properties
+
+-sub: *.bnd
+    
+-buildpath: \
+	osgi.core;version=5.0,\
+	osgi.cmpn,\
+	biz.aQute.bnd.annotation,\
+	${junit},\
+	\
+	org.apache.felix.gogo.runtime,\
+	\
+	slf4j.api

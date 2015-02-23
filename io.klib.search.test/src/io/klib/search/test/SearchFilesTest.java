@@ -43,6 +43,24 @@ public class SearchFilesTest extends TestCase {
 		assertEquals(expected, found);
 	}
 
+	public void testFlatDirectorySearch() throws Exception {
+		Set<URI> expected = new HashSet<URI>();
+		expected.add(testfile("/dirC"));
+		
+		Set<URI> found = searchFS.find(TESTDIR, ".*/dirC/", null, (SearchOption[]) null);
+		assertEquals(expected, found);
+
+	}
+	
+	public void testRecurseDirectorySearch() throws Exception {
+		
+		Set<URI> expected = new HashSet<URI>();
+		expected.add(testfile("/dirA/dirK"));
+		
+		Set<URI> found = searchFS.find(TESTDIR, ".*/dirK/", null, SearchOption.RECURSE);
+		assertEquals(expected, found);
+	}
+	
 	public void testSearchForForFileWithoutExtension() throws Exception {
 		Set<URI> expected = new HashSet<URI>();
 		expected.add(testfile("/fileWithOutExtension"));
