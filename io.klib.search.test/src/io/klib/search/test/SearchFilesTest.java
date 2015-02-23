@@ -76,6 +76,7 @@ public class SearchFilesTest extends TestCase {
         expected.addAll(testfiles(new String[] { 
         		"/dirA/"
         		, "/dirA/dirJ"
+        		, "/dirA/dirJ/.gitattributes"
         		, "/dirA/dirJ/file1.txt"
         		, "/dirA/dirJ/fileWithWindowsNewLine.txt"
         		, "/dirA/dirJ/fileWithUnixNewLine.txt"
