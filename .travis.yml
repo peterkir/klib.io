@@ -3,16 +3,16 @@ jdk:
 - oraclejdk8
 before_install:
 - chmod +x gradlew
-deploy:
-  provider: s3
-  access_key_id: AKIAI6FGWB26WLJZHBRQ
-  secret_access_key:
-    secure: V6LtYfj+HXk3iKxK9oEtk7XmHTczwy7gGkIphJOGTAfmz7MtggHC43NDUpRkYdlmxOlOPEbyxaEOOSIyCWipYqak0AUWesWUpTHsnKnmRzOOb+f9srXEBzreAj452zCxgVj5EHdXaC5c/D2N/0ipwqPrOyzMHRMu3gkKy1vvjAo=
-  bucket: klib.io
-  region: eu-west-1  
-  local-dir: "/home/travis/build/peterkir/klib.io/io.klib.search.test/generated/test-reports"
-  upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
-  skip_cleanup: true
-  acl: public_read
-  on:
-    repo: peterkir/klib.io
+#deploy:
+#  provider: s3
+#  access_key_id: AKIAI6FGWB26WLJZHBRQ
+#  secret_access_key:
+#    secure: V6LtYfj+HXk3iKxK9oEtk7XmHTczwy7gGkIphJOGTAfmz7MtggHC43NDUpRkYdlmxOlOPEbyxaEOOSIyCWipYqak0AUWesWUpTHsnKnmRzOOb+f9srXEBzreAj452zCxgVj5EHdXaC5c/D2N/0ipwqPrOyzMHRMu3gkKy1vvjAo=
+#  bucket: klib.io
+#  region: eu-west-1  
+#  local-dir: "/home/travis/build/peterkir/klib.io/io.klib.search.test/generated/test-reports"
+#  upload-dir: artifacts/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
+#  skip_cleanup: true
+#  acl: public_read
+#  on:
+#    repo: peterkir/klib.io
