@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/peterkir/klib.io.png)](https://travis-ci.org/peterkir/klib.io)
+[![Build status](https://ci.appveyor.com/api/projects/status/x0n995iu4brrhrmr?svg=true)](https://ci.appveyor.com/project/PeterKirschner/klib-io)
+
+
 
 # klib.io
 OSGi library bundle projects
